@@ -177,3 +177,41 @@ plt.imshow(threshold, cmap='gray_r')
 plt.axis("off")
 plt.title("Nach Anwendung Canny Schwellwerte")
 plt.show()
+
+def smooth_canny(img):
+  rows= len(img)
+  cols= len(img[0])
+  ret = []
+  for row in range(rows):
+    ret_row = []
+    for col in range(cols):
+      ret_row.append(2 if img[row][col] == 2 else 0)
+      if ret_row[col] == 1:
+        for i in range(-1,2):
+          neighbor_row = row+i
+          if neighbor_row < 0 or neighbor_row >= rows:
+            continue
+          for j in range(-1,2):
+            neighbor_col = col+j
+            if neighbor_col < 0 or neighbor_col >= cols:
+              continue
+            if i==0 and j==0:
+              continue
+            if img[neighbor_row][neighbor_col] == 2:
+              ret_row[col] = 2
+    ret.append(ret_row)
+  return ret
+
+plt.figure()
+plt.imshow(threshold, cmap='gray_r')
+plt.axis("off")
+plt.title("Vor Anwendung Canny Smoothing")
+
+
+
+smooth = smooth_canny(threshold)
+plt.figure()
+plt.imshow(smooth, cmap='gray_r')
+plt.axis("off")
+plt.title("Nach Anwendung Canny Smoothing")
+plt.show()
