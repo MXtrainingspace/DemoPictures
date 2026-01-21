@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import cv2
 
 image_path='../testpicture_1.png'
-img_list = plt_img = plt.imread(image_path)
 
 img = cv2.imread(image_path)
 dims = img.shape
